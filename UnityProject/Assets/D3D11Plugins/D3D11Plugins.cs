@@ -18,6 +18,8 @@ public static class D3D11PluginsNative {
     public static extern void ReleaseTimers();
     [DllImport("D3D11Plugins")]
     public static extern float GetTimerDuration(int index);
+    [DllImport("D3D11Plugins")]
+    public static extern float GetFrameTimerDuration();
 }
 
 public class D3D11GPUTimer {
@@ -49,7 +51,6 @@ public class D3D11GPUTimer {
 
 public class D3D11Plugins : MonoBehaviour {
     private static D3D11Plugins instance;
-    private static D3D11GPUTimer frameTimer;
     private static Queue<D3D11GPUTimer> timerCreateQueue = new Queue<D3D11GPUTimer>();
 
     private static void CreateInstance() {
@@ -59,8 +60,6 @@ public class D3D11Plugins : MonoBehaviour {
         var gameObject = new GameObject("D3D11Plugins");
         instance = gameObject.AddComponent<D3D11Plugins>();
         GameObject.DontDestroyOnLoad(gameObject);
-        frameTimer = new D3D11GPUTimer();
-        frameTimer.internalId = 0;
     }
 
     private void OnDestroy() {
@@ -89,7 +88,7 @@ public class D3D11Plugins : MonoBehaviour {
 
     public static float FrameDuration {
         get {
-            return frameTimer.Duration;
+            return D3D11PluginsNative.GetFrameTimerDuration();
         }
     }
 }

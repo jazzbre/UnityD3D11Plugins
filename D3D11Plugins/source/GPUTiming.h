@@ -57,7 +57,7 @@ struct GPUTimer {
 
     ID3D11Query* m_StartQuery[2] = {};
     ID3D11Query* m_EndQuery[2] = {};
-    float m_Time = -1.0f;
+    float m_Time = 0.0f;
 };
 
 // GPUDisjoint
@@ -125,7 +125,7 @@ struct GPUTiming {
             return false;
         }
         // Get default frame timer
-        frameTimer.Create(m_Device);
+        m_FrameTimer.Create(m_Device);
         return true;
     }
 
@@ -141,7 +141,7 @@ struct GPUTiming {
     void Release() {
         ReleaseTimers();
         // Release frame timer
-        frameTimer.Release();
+        m_FrameTimer.Release();
         // Release disjoint
         m_GPUDisjoint.Release();
         // Release context
@@ -166,7 +166,7 @@ struct GPUTiming {
         }
         m_BeginFrameCalled = true;
         m_GPUDisjoint.Begin(m_DeviceContext, m_FrameIndex);
-        BeginTimer(0);
+        m_FrameTimer.Begin(m_DeviceContext, m_FrameIndex);
     }
 
     void EndFrame() {
@@ -174,7 +174,7 @@ struct GPUTiming {
             return;
         }
         m_BeginFrameCalled = false;
-        EndTimer(0);
+        m_FrameTimer.End(m_DeviceContext, m_FrameIndex);
         m_GPUDisjoint.End(m_DeviceContext, m_FrameIndex);
         // Update frame
         ++m_FrameCounter;
@@ -188,6 +188,7 @@ struct GPUTiming {
         if (!m_GPUDisjoint.Update(m_DeviceContext, activeFrameIndex, &frequency)) {
             return;
         }
+        m_FrameTimer.Update(m_DeviceContext, activeFrameIndex, frequency);
         for (auto& gpuTimer : m_GPUTimers) {
             gpuTimer.Update(m_DeviceContext, activeFrameIndex, frequency);
         }
@@ -209,15 +210,19 @@ struct GPUTiming {
 
     float GetTimerDuration(int index) {
         if (index < 0 || index >= (int)m_GPUTimers.size()) {
-            return -1.0f;
+            return 0.0f;
         }
         return m_GPUTimers[index].GetDuration();
+    }
+
+    float GetFrameTimerDuration() {
+        return m_FrameTimer.GetDuration();
     }
 
     ID3D11Device* m_Device = nullptr;
     ID3D11DeviceContext* m_DeviceContext = nullptr;
     GPUDisjoint m_GPUDisjoint;
-    GPUTimer frameTimer;
+    GPUTimer m_FrameTimer;
     std::vector<GPUTimer> m_GPUTimers;
     bool m_BeginFrameCalled = false;
     int m_FrameIndex = 0;

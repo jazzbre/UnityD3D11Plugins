@@ -94,9 +94,16 @@ extern "C" int UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API CreateTimer() {
 
 extern "C" float UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API GetTimerDuration(int index) {
     if (s_Device == nullptr) {
-        return -1.0f;
+        return 0.0f;
     }
     return s_GPUTiming.GetTimerDuration(index);
+}
+
+extern "C" float UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API GetFrameTimerDuration() {
+    if (s_Device == nullptr) {
+        return 0.0f;
+    }
+    return s_GPUTiming.GetFrameTimerDuration();
 }
 
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API ReleaseTimers() {
