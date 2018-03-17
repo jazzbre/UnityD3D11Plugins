@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "D3D11Plugins", "D3D11Plugins.vcxproj", "{6D6E147B-5C37-48DD-B8BB-2F612F33C5DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6D6E147B-5C37-48DD-B8BB-2F612F33C5DD}.Debug|x64.ActiveCfg = Debug|x64
+		{6D6E147B-5C37-48DD-B8BB-2F612F33C5DD}.Debug|x64.Build.0 = Debug|x64
+		{6D6E147B-5C37-48DD-B8BB-2F612F33C5DD}.Debug|x86.ActiveCfg = Debug|Win32
+		{6D6E147B-5C37-48DD-B8BB-2F612F33C5DD}.Debug|x86.Build.0 = Debug|Win32
+		{6D6E147B-5C37-48DD-B8BB-2F612F33C5DD}.Release|x64.ActiveCfg = Release|x64
+		{6D6E147B-5C37-48DD-B8BB-2F612F33C5DD}.Release|x64.Build.0 = Release|x64
+		{6D6E147B-5C37-48DD-B8BB-2F612F33C5DD}.Release|x86.ActiveCfg = Release|Win32
+		{6D6E147B-5C37-48DD-B8BB-2F612F33C5DD}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F721BAAF-1C89-4D7F-A46F-E4DC2D32CDE9}
+	EndGlobalSection
+EndGlobal
