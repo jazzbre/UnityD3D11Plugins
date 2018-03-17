@@ -1,0 +1,11 @@
+LIBRARY
+
+EXPORTS
+   UnityPluginLoad
+   UnityPluginUnload
+   GetBeginFrameEventFunction
+   GetEndFrameEventFunction
+   GetBeginTimerEventFunction
+   GetEndTimerEventFunction
+   CreateTimer
+   GetTimerDuration

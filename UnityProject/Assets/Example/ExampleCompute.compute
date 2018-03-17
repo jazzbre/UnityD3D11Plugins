@@ -1,0 +1,36 @@
+﻿#pragma kernel CSMain
+
+float4 targetTextureSize;
+RWTexture2D<float4> targetTexture;
+
+#define Count 512
+
+[numthreads(16,16,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+	// Mandelbrot code used: https://github.com/Erkaman/vulkan_minimal_compute/blob/master/shaders/shader.comp
+	float x = float(id.x) / targetTextureSize.x;
+	float y = float(id.y) / targetTextureSize.y;
+
+	float2 uv = float2(x, y);
+	float n = 0.0f;
+	float2 z = 0.0f;
+	float2 c = float2(-0.445f, 0.0f) + (uv - 0.5f) * (2.0f + 1.7f * 0.2f);
+	for (int i = 0; i<Count; ++i) {
+		z = float2(z.x * z.x - z.y * z.y, 2.0f * z.x * z.y) + c;
+		if (dot(z, z) > 2.0f) {
+			break;
+		}
+		++n;
+	}
+          
+	// We use a simple cosine palette to determine color:
+	// http://iquilezles.org/www/articles/palettes/palettes.htm         
+	float t = float(n) / float(Count);
+	float3 d = float3(0.3f, 0.3f ,0.5f);
+	float3 e = float3(-0.2f, -0.3f ,-0.5f);
+	float3 f = float3(2.1f, 2.0f, 3.0f);
+	float3 g = float3(0.0f, 0.1f, 0.0f);
+	float4 color = float4(d + e * cos(6.28318f * (f * t + g) ), 1.0f);	
+	targetTexture[id.xy] = color;
+}

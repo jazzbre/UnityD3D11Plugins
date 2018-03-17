@@ -1,0 +1,12 @@
+x64/
+Debug/
+.vs/
+Library/
+Temp/
+*.csproj*
+*.sln*
+*.ipdb*
+*.lib*
+*.ilk*
+*.exp*
+*.iobj*
